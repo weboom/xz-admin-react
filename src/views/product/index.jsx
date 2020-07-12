@@ -3,6 +3,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Table, Tag, Space, Form, Input, Button, DatePicker } from 'antd';
 import * as api from '../../apis/index';
 import style from './index.module.less';
+import { NavLink } from 'react-router-dom';
 
 const { RangePicker } = DatePicker;
 
@@ -25,6 +26,11 @@ const columns = [
     title: '标题',
     dataIndex: 'title',
     key: 'title',
+    render: (text, record) => {
+      return (
+      <NavLink to={`/product/${record.id}`}>{text}</NavLink>
+      )
+    }
   },
   {
     title: '描述',
