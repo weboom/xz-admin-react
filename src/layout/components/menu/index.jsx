@@ -44,12 +44,6 @@ class LayoutMenu extends React.Component {
         <Menu.Item key="permisson" icon={<AppstoreOutlined />}>
           权限管理
         </Menu.Item>
-
-        <Menu.Item key="alipay">
-          <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-            Navigation Four - Link
-          </a>
-        </Menu.Item>
       </Menu>
     );
   }
