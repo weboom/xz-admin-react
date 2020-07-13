@@ -13,27 +13,10 @@ import './index.css';
 
 import { routes } from './router/index';
 
-// import Ren
-
-console.log(renderRoutes(routes))
-
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-    { renderRoutes(routes)}
-      {/* <Switch>
-        <Route path="/"
-          component={() => {
-            return (
-              <MainLayout history={BrowserRouter}>
-                <Route exact path="/" component={dashboardView}/>
-                <Route exact path="/product" component={Product}/>
-                <Route exact path="/product/:id" component={ProductDetail} />
-              </MainLayout>
-            )
-          }}
-        />
-      </Switch> */}
+      { renderRoutes(routes) }
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

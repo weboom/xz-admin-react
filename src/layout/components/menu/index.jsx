@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter, useHistory } from "react-router-dom";
 import { Menu } from 'antd';
 import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
@@ -11,30 +11,42 @@ export default function LayoutMenu() {
   const [current, setCurrent] = useState('');
   const history = useHistory();
 
+  const renderMenuItem = (route) => {
+    return (
+      <Menu.Item key={route.path} icon={<MailOutlined />}>
+        { route.title }
+      </Menu.Item>
+    )
+  }
+
+  const renderMenu = (list) => {
+    return list
+      .filter(route => !route.hidden)
+      .map(route => {
+        if (!route.routes || !route.routes.length || (route.routes.length === 1)) {
+          return renderMenuItem(route)
+        } else {
+          return (
+            <SubMenu icon={<AppstoreOutlined />} title={route.title}>
+              { renderMenu(route.routes) }
+            </SubMenu>
+          )
+        }
+      })
+  }
+
   const handleClick = (e) => {
     setCurrent(e.key);
-    console.log(history)
     history.push(e.key);
   }
-  return(
+
+  useEffect(() => {
+    setCurrent(history.location.pathname);
+  })
+
+  return (
     <Menu onClick={handleClick} selectedKeys={[current]} mode="inline">
-      <Menu.Item key="/dashboard" icon={<MailOutlined />}>
-        工作台
-      </Menu.Item>
-
-      <SubMenu icon={<AppstoreOutlined />} title="商品管理">
-        <Menu.Item key="/product">商品管理</Menu.Item>
-        <Menu.Item key="/product/brand">品牌管理</Menu.Item>
-        <Menu.Item key="/product/category">分类管理</Menu.Item>
-      </SubMenu>
-    
-      <Menu.Item key="/order" icon={<AppstoreOutlined />}>
-        订单管理
-      </Menu.Item>
-
-      <Menu.Item key="/permission" icon={<AppstoreOutlined />}>
-        权限管理
-      </Menu.Item>
+      { renderMenu(routes) }
     </Menu>
   )
 }

@@ -5,7 +5,6 @@ import {renderRoutes} from 'react-router-config';
 
 const mainLayout = (props) => {
   const { route } = props;
-  console.log(route)
   return (
     <div className='main-layout'>
       <div className={style.sidebar}>

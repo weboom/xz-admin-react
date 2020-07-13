@@ -25,12 +25,12 @@ export const routes = [
     path: '/dashboard',
     component: Layout,
     exact: true,
+    title: '工作台',
     routes: [
       {
         path: '',
         component: Dashboard,
         exact: true,
-        title: '工作台',
       }
     ]
   },
@@ -68,24 +68,24 @@ export const routes = [
   {
     path: '/order',
     component: Layout,
+    title: '订单管理',
     routes: [
       {
         path: '',
         component: Order,
-        exact: true,
-        title: '订单管理'
+        exact: true
       }
     ]
   },
   {
     path: '/permission',
     component: Layout,
+    title: '权限管理',
     routes: [
       {
         path: '',
         component: Permission,
         exact: true,
-        title: '权限管理'
       }
     ]
   }
