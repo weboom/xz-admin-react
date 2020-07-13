@@ -11,12 +11,7 @@ class Login extends Component {
     console.log('render')
     return (
       <div>
-        <span>{this.state.username}</span>
-        <button onClick={() => {
-          this.setState({
-            count: this.state.count++
-          })
-        }}>click</button>
+        Login
       </div>
     )
   }
