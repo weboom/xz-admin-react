@@ -7,9 +7,9 @@ import { matchRoutes } from '../../../utils/react-router-config'
 
 const { SubMenu } = Menu;
 
-export default  class LayoutMenu extends React.Component {
+export default  class LayoutMenu extends React.Component (props) {
   state = {
-    current: [],
+    current: '',
     openKeys: []
   }
 
@@ -53,44 +53,33 @@ export default  class LayoutMenu extends React.Component {
       return res
     }
     let currentRoute = findRoute(routes);
-    this.props.history.push(currentRoute.path);
+    history.push(currentRoute.path);
     this.setState({
-      current: e.key,
+      current: currentRoute.path,
       openKeys: e.keyPath
     })
   }
 
-  onOpenChange = openKeys => {
-    const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+  componentDidMount() {
+    const matchedRoutes = matchRoutes(routes, history.location.pathname);
+    const keyPath = matchedRoutes.map(el => el.route.name)
+    // setCurrent(matchedRoutes[matchedRoutes.length - 1].route.name);
+    // setOpenKeys(keyPath)
     this.setState({
-      openKeys: [latestOpenKey]
+      current: matchedRoutes[matchedRoutes.length - 1].route.name,
+      openKeys: keyPath
     })
   }
 
-  componentWillMount() {
-    const matchedRoutes = matchRoutes(routes, this.props.history.location.pathname);
-    const keyPath = matchedRoutes.reduce((acc, el) => {
-      acc.push(el.route.activeMenu || el.route.name)
-      return acc
-    }, [])
-    this.setState(() => ({
-      current: keyPath,
-      openKeys: keyPath
-    }))
-  }
-
   render() {
-    console.log(this.state.current)
-    console.log(this.state.openKeys)
     return (
       <Menu
         mode="inline"
         onClick={this.handleClick}
-        selectedKeys={this.state.current}
-        openKeys={ this.state.openKeys }
-        onOpenChange={this.onOpenChange}
+        selectedKeys={[this.current]}
+        defaultOpenKeys={ this.thisopenKeys }
       >
-        { this.renderMenu(routes) }
+        { renderMenu(routes) }
       </Menu>
     )
   }
