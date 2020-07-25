@@ -8,7 +8,6 @@ import Navbar from '../components/navbar/index'
 
 export default function MainLayout(props)  {
   const { route } = props;
-
   return (
     <div className='main-layout'>
       <div className={style.sidebar}>
@@ -20,7 +19,7 @@ export default function MainLayout(props)  {
           <Navbar {...props} />
         </div>
         <div className={style.content}>
-          { renderRoutes (route.routes) }
+          { props.children ? props.children : renderRoutes (route.routes) }
         </div>
       </div>
     </div>

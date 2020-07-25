@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Switch, Route } from 'react-router-dom';
 
 import Product from '../views/product/index';
 import ProductDetail from '../views/product/detail';
@@ -40,24 +40,22 @@ export const routes = [
     path: '/dashboard',
     exact: true,
     title: '工作台',
-    component: Layout,
     name: "DashboardLayout",
-    routes: [
-      {
-        path: '/dashboard',
-        component: Dashboard,
-        exact: true,
-        name: "Dashboard",
-        activeMenu: 'DashboardLayout',
-      }
-    ]
+    isLayout: true,
+    render: (props) => {
+      return (
+        <Layout {...props}>
+          <Dashboard />
+        </Layout>
+      )
+    }
   },
   {
     path: '/product',
     component: Layout,
     title: '商品管理',
     name: 'ProductLayout',
-    redirect: '/product/index',
+    isLayout: true, 
     routes: [
       {
         path: '/product/index',
@@ -88,31 +86,22 @@ export const routes = [
         title: '商品详情',
         name: 'ProductDetail',
         activeMenu: 'ProductList',
+        prevNav: "ProductList"
       }
-      // {
-      //   path: '*',
-      //   hidden: true,
-      //   name: 'ProductList',
-      //   render: (props) => {
-      //     props.history.replace('/product/index');
-      //     return ''
-      //   }
-      // }
     ]
   },
   {
     path: '/order',
-    component: Layout,
     title: '订单管理',
     name: "OrderLayout",
-    routes: [
-      {
-        path: '',
-        component: Order,
-        exact: true,
-        name: 'Order',
-      }
-    ]
+    isLayout: true, 
+    render: (props) => {
+      return (
+        <Layout {...props}>
+          <Dashboard />
+        </Layout>
+      )
+    }
   },
   {
     path: '/permission',
@@ -122,6 +111,7 @@ export const routes = [
     name: "PermissionLayout",
     alwaysShow: true,
     redirect: '/permission/admin',
+    isLayout: true,
     routes: [
       {
         path: '/permission/admin',

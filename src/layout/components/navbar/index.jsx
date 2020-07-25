@@ -12,9 +12,15 @@ export default function Navbar(props) {
       {matchedRoutes.map(route => {
         return (
           <Breadcrumb.Item key={route.route.name}>
-            <Link to={route.route.redirect || route.match.url}>
-              <span>{route.route.title}</span>
-            </Link>
+            {
+              route.route.isLayout ? (
+                <span>{route.route.title}</span>
+              ) : (
+                <Link to={route.match.url}>
+                  <span>{route.route.title}</span>
+                </Link>
+              )
+            }
           </Breadcrumb.Item>
         )
       })}
